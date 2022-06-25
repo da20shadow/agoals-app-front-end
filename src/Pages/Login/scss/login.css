@@ -1,0 +1,35 @@
+.loginForm {
+  margin: 65px auto;
+  width: 90%;
+  padding: 25px 45px;
+}
+.loginForm h1 {
+  font-family: cursive;
+  font-weight: 600;
+  color: #61dafb;
+}
+@media only screen and (min-width: 600px) {
+  .loginForm {
+    max-width: 80%;
+  }
+}
+@media only screen and (min-width: 740px) {
+  .loginForm {
+    max-width: 75%;
+  }
+}
+@media only screen and (min-width: 900px) {
+  .loginForm {
+    max-width: 50%;
+  }
+}
+
+.validInput {
+  border-color: #198754;
+}
+
+.invalidInput {
+  border-color: #dc3545;
+}
+
+/*# sourceMappingURL=login.css.map */

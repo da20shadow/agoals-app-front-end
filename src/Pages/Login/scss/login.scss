@@ -1,0 +1,29 @@
+.loginForm{
+  margin: 65px auto;
+  width: 90%;
+  padding: 25px 45px;
+  h1{
+    font-family: cursive;
+    font-weight: 600;
+    color: #61dafb;
+  }
+  @media only screen and (min-width: 600px) {
+    max-width: 80%;
+  }
+  @media only screen and (min-width: 740px) {
+    max-width: 75%;
+  }
+  @media only screen and (min-width: 900px) {
+    max-width: 50%;
+  }
+}
+.validInput {
+
+  border-color: #198754;
+  //box-shadow: inset 0 0 15px 0 #198754;
+}
+
+.invalidInput{
+  border-color: #dc3545;
+  //box-shadow: inset 0 0 15px 0 #dc3545;
+}
