@@ -4,6 +4,7 @@ import {BsCheckLg, BsFillExclamationTriangleFill} from "react-icons/bs";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import * as authService from '../../Services/AuthService';
+import {login} from "../../Services/AuthService";
 function Login() {
     const redirect = useNavigate();
     const [notification, setNotification] = useState();
@@ -13,26 +14,38 @@ function Login() {
         const {username, password} = Object.fromEntries(formData);
 
         let responseMessage = authService.login({username,password});
+        responseMessage
+            .then(res => {
+                let authData = {
+                    'id': res.user_id,
+                    'email': res.email,
+                    'username': res.username,
+                    'token': res.token,
+                }
+                login(authData);
+                console.log('This is the success: ',res);
 
-        console.log(responseMessage)
-
-        const message = (
-            <div className="alert alert-success-flex align-items-center
+                const success = (
+                    <div className="alert alert-success-flex align-items-center
                         alert-success fade show position-absolute alert-position"
-                            role="alert">
-            <BsCheckLg size={'24px'} className={'bi flex-shrink-0 me-2'}/>
-            <strong> Successfully logged in! </strong>
-            </div>
-        );
-
-        const error = (
-            <div className="alert alert-danger-flex align-items-center
+                         role="alert">
+                        <BsCheckLg size={'24px'} className={'bi flex-shrink-0 me-2'}/>
+                        <strong> Successfully logged in! </strong>
+                    </div>
+                );
+                setNotification(success);
+            })
+            .catch(err => {
+                const error = (
+                    <div className="alert alert-danger-flex align-items-center
                         alert-danger fade show position-absolute alert-position"
-                 role="alert">
-                <BsFillExclamationTriangleFill size={'24px'} className={'bi flex-shrink-0 me-2'} />
-                <strong> Error: </strong> {err.response.data.message}
-            </div>
-        );
+                         role="alert">
+                        <BsFillExclamationTriangleFill size={'24px'} className={'bi flex-shrink-0 me-2'} />
+                        <strong> Error: </strong> {err.response.data.message}
+                    </div>
+                );
+                setNotification(error);
+        })
 
         // setNotification(successMsg);
         setTimeout(()=>{
