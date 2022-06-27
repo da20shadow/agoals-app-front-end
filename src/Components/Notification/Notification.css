@@ -1,0 +1,11 @@
+.alert, .alert-success {
+  display: flex;
+  align-items: center;
+  border-radius: 7px;
+  padding: 15px 25px;
+  position: fixed;
+  top: 7%;
+  right: 5%;
+}
+
+/*# sourceMappingURL=Notification.css.map */
