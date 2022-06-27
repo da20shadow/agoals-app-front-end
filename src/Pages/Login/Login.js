@@ -1,97 +1,77 @@
 import './scss/login.css';
-import axios from "axios";
-import {BsCheckLg, BsFillExclamationTriangleFill} from "react-icons/bs";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import * as authService from '../../Services/AuthService';
-import {login} from "../../Services/AuthService";
+import {CgLogIn} from 'react-icons/cg';
+import {Button, Notification} from "../../Components";
+import {useAuthContext} from "../../Contexts/AuthContext";
 function Login() {
     const redirect = useNavigate();
-    const [notification, setNotification] = useState();
-    const processLogin = async (e) => {
+    const [alert,setAlert] = useState(undefined);
+    const {login} = useAuthContext();
+
+    const processLogin = (e) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const {username, password} = Object.fromEntries(formData);
 
-        let responseMessage = authService.login({username,password});
-        responseMessage
-            .then(res => {
-                let authData = {
-                    'id': res.user_id,
-                    'email': res.email,
-                    'username': res.username,
-                    'token': res.token,
-                }
-                login(authData);
-                console.log('This is the success: ',res);
-
-                const success = (
-                    <div className="alert alert-success-flex align-items-center
-                        alert-success fade show position-absolute alert-position"
-                         role="alert">
-                        <BsCheckLg size={'24px'} className={'bi flex-shrink-0 me-2'}/>
-                        <strong> Successfully logged in! </strong>
-                    </div>
-                );
-                setNotification(success);
-            })
-            .catch(err => {
-                const error = (
-                    <div className="alert alert-danger-flex align-items-center
-                        alert-danger fade show position-absolute alert-position"
-                         role="alert">
-                        <BsFillExclamationTriangleFill size={'24px'} className={'bi flex-shrink-0 me-2'} />
-                        <strong> Error: </strong> {err.response.data.message}
-                    </div>
-                );
-                setNotification(error);
-        })
-
-        // setNotification(successMsg);
-        setTimeout(()=>{
-            // redirect('/account');
-        },2500)
-
-        if (!notification){
-            setTimeout(()=>{
-                setNotification('');
-            },3000);
+        if (!alert){
+            let response= authService.login({username,password});
+            response
+                .then(res => {
+                    login({
+                        user_id: res.user_id,
+                        username: res.username,
+                        email: res.email,
+                        token: res.token,
+                        }
+                    )
+                    setAlert(<Notification type={'Success'} text={'You Are Successfully Logged In!'}/>);
+                    setTimeout(()=>{
+                        redirect('/account');
+                    },1500);
+                })
+                .catch(err => {
+                    setAlert(<Notification type={'Error'} text={err.response.data.message}/>);
+                })
+            setTimeout(() => {
+                setAlert(undefined);
+            }, 2500);
         }
     }
 
     return (
-        <div className={'container'}>
+        <div className={'login-container'}>
 
-            <div className="row">
+            <div id="message" className="text-center absolute">{ alert }</div>
 
-                <div id="message" className="text-center">{notification}</div>
+            <form method="post"
+                  className={'loginForm bg-main-bg w-4/5 md:w-96 bg-light-slate-bg drop-shadow-2xl'}
+                  onSubmit={processLogin}>
 
-                <form method="post" className={'loginForm'} onSubmit={processLogin}>
+                <h1 className="text-center text-blue text-3xl mb-8">Login</h1>
 
-                    <h1 className="text-center">Login</h1>
+                <div className="grid gap-4 grid-cols-1">
 
-                    <div className="my-3">
-                        <input type="text"
-                               name={'username'}
-                               className=" invalidInput"
-                               placeholder={'Username'}
-                               required/>
+                    <input type="text"
+                           name={'username'}
+                           className="w-full px-3 py-2 border border-slate-400 rounded-lg"
+                           placeholder={'Username'}
+                           required/>
+
+                    <input type="password"
+                           name={'password'}
+                           className="w-full px-3 py-2 border border-slate-400 rounded-lg"
+                           placeholder={'Password'}
+                           required/>
+
+                    <div className="my-5">
+                        <Button primaryBtn={true} icon={<CgLogIn />} text={'Login'} />
                     </div>
 
-                    <div className="mb-3">
-                        <input type="password"
-                               name={'password'}
-                               className=" is-invalid"
-                               placeholder={'Password'}
-                               required/>
-                    </div>
+                </div>
 
-                    <div className="mb-3">
-                        <button>Login</button>
-                    </div>
-
-                </form>
-            </div>
+            </form>
         </div>
     )
 }
