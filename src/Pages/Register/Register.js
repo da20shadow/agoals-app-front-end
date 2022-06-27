@@ -1,13 +1,13 @@
-import { BsFillExclamationTriangleFill } from 'react-icons/bs';
-import { BsCheckLg } from 'react-icons/bs';
 import './register.css';
-import axios from "axios";
 import {useState} from "react";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import * as authService from "../../Services/AuthService";
+import {Button, Notification} from "../../Components";
+import {CgLogIn} from "react-icons/cg";
 
 function Register() {
     const redirect = useNavigate();
-    const [notification, setNotification] = useState();
+    const [alert, setAlert] = useState(undefined);
 
     const processRegistration = async (e) => {
         e.preventDefault();
@@ -20,97 +20,66 @@ function Register() {
             password,
             re_password,
         }
-        const url = 'http://localhost:8090/AGoalsAppBackEnd/users/';
 
-        try {
-            let response = await axios.post(url,data);
-            let result = await response.data;
-            console.log('Success: ', response)
-
-            const successMsg = (
-                <div className="alert alert-success-flex align-items-center
-                        alert-success fade show position-absolute alert-position"
-                     role="alert">
-                    <BsCheckLg size={'24px'} className={'bi flex-shrink-0 me-2'} />
-                    <strong> Success: </strong> {result.message}
-                </div>
-            );
-            setNotification(successMsg);
-            setTimeout(()=>{
-                redirect('/login');
-            },2500)
-
-        }catch (err){
-            console.log('Error: ',err)
-            console.log(err.response.data.message)
-            const errorMsg = (
-                <div className="alert alert-danger-flex align-items-center
-                        alert-danger fade show position-absolute alert-position"
-                     role="alert">
-                    <BsFillExclamationTriangleFill size={'24px'} className={'bi flex-shrink-0 me-2'} />
-                    <strong> Error: </strong> {err.response.data.message}
-                </div>
-            );
-            setNotification(errorMsg);
+        if (!alert) {
+            let response = authService.register(data);
+            response
+                .then(data => {
+                    setAlert(<Notification type={'Success'} text={data.message} />);
+                    setTimeout(() => {
+                        redirect('/login');
+                    }, 1500);
+                })
+                .catch(err => {
+                    setAlert(<Notification type={'Error'} text={err.response.data.message}/>);
+                })
         }
-        if (!notification){
-            setTimeout(()=>{
-                setNotification('');
-            },3000);
-        }
+        setTimeout(() => {
+            setAlert(undefined);
+        }, 3000);
     }
 
     return (
-        <div className={'container'}>
+        <div className={'flex justify-center my-16'}>
 
-            <div className="row">
+            <div id="message" className="text-center absolute">{alert}</div>
 
-                <div id="message" className="text-center">{notification}</div>
+            <form method="post"
+                  className={'bg-main-bg w-4/5 md:w-3/4 py-10 px-8 drop-shadow-2xl rounded-lg border'}
+                  onSubmit={processRegistration}>
 
-                <form method="post" className={'regForm'} onSubmit={processRegistration}>
+                <h1 className="text-center mb-10 text-blue text-3xl font-bold">Register</h1>
 
-                    <h1 className="text-center mb-3">Register</h1>
+                <div className="grid gap-4 grid-cols-2">
+                    <input type="text"
+                           name={'username'}
+                           className="w-full px-3 py-2 border border-slate-400 rounded-lg"
+                           placeholder={'Username'}
+                           required/>
 
-                    <div className="row">
-                        <div className="col-12 col-lg-6">
-                            <input type="text"
-                                   name={'username'}
-                                   className=" invalidInput"
-                                   placeholder={'Username'}
-                                   required/>
-                        </div>
+                    <input type="email"
+                           name={'email'}
+                           className="w-full px-3 py-2 border border-slate-400 rounded-lg"
+                           placeholder={'Email'}
+                           required/>
 
-                        <div className="col-12 col-lg-6">
-                            <input type="email"
-                                   name={'email'}
-                                   className=" invalidInput"
-                                   placeholder={'Email'}
-                                   required/>
-                        </div>
+                    <input type="password"
+                           name={'password'}
+                           className="w-full px-3 py-2 border border-slate-400 rounded-lg"
+                           placeholder={'Password'}
+                           required/>
 
-                        <div className="col-12 col-lg-6">
-                            <input type="password"
-                                   name={'password'}
-                                   className=" is-invalid"
-                                   placeholder={'Password'}
-                                   required/>
-                        </div>
+                    <input type="password"
+                           name={'re_password'}
+                           className="w-full px-3 py-2 border border-slate-400 rounded-lg"
+                           placeholder={'Re-password'}
+                           required/>
+                </div>
 
-                        <div className="col-12 col-lg-6">
-                            <input type="password"
-                                   name={'re_password'}
-                                   className=" is-invalid"
-                                   placeholder={'Re-password'}
-                                   required/>
-                        </div>
-
-                        <div className="mt-4">
-                            <button type={'submit'}>Register</button>
-                        </div>
-                    </div>
-
-                </form>
-            </div>
+                <div className="mt-8">
+                    <Button primaryBtn={true} icon={<CgLogIn />} text={'Register'} />
+                </div>
+            </form>
         </div>
     )
 }
