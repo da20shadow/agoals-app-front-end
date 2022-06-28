@@ -10,10 +10,16 @@ module.exports = {
       'primary': '#424854',
       'secondary': '#5a6170',
       'accent': '#61dafb',
+      'gray': '#555c67',
+      'light-gray': '#a5acb3',
       'green': '#105133',
+      'light-green': '#d1e6dd',
       'blue': '#074198',
+      'light-blue': '#cfe2ff',
       'orange': '#674d03',
+      'light-orange': '#fff2cd',
       'red': '#84202b',
+      'light-red': '#f7d7da',
     },
     extend: {
       fontSize: {
