@@ -3,7 +3,8 @@ import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import * as authService from "../../Services/AuthService";
 import {Button, Notification} from "../../Components";
-import {CgLogIn} from "react-icons/cg";
+import {FaUserPlus} from "react-icons/fa";
+import * as useerService from "../../Services/UserService";
 
 function Register() {
     const redirect = useNavigate();
@@ -20,8 +21,12 @@ function Register() {
             password,
             re_password,
         }
+        const invalidFormDataMessage = useerService.verifyForm(username,email,password,re_password);
 
-        if (!alert) {
+        if (invalidFormDataMessage){
+            setAlert(<Notification type={'Error'} text={invalidFormDataMessage} />)
+        }
+        if (!invalidFormDataMessage) {
             let response = authService.register(data);
             response
                 .then(data => {
@@ -33,10 +38,15 @@ function Register() {
                 .catch(err => {
                     setAlert(<Notification type={'Error'} text={err.response.data.message}/>);
                 })
+            setTimeout(() => {
+                setAlert(undefined);
+            }, 3000);
         }
-        setTimeout(() => {
-            setAlert(undefined);
-        }, 3000);
+        if (invalidFormDataMessage){
+            setTimeout(() => {
+                setAlert(undefined);
+            }, 3000);
+        }
     }
 
     return (
@@ -45,7 +55,7 @@ function Register() {
             <div id="message" className="text-center absolute">{alert}</div>
 
             <form method="post"
-                  className={'bg-main-bg w-4/5 md:w-3/4 py-10 px-8 drop-shadow-2xl rounded-lg border'}
+                  className={'bg-main-bg w-4/5 md:w-3/4 lg:w-1/2 py-10 px-8 drop-shadow-2xl rounded-lg'}
                   onSubmit={processRegistration}>
 
                 <h1 className="text-center mb-10 text-blue text-3xl font-bold">Register</h1>
@@ -77,7 +87,7 @@ function Register() {
                 </div>
 
                 <div className="mt-8">
-                    <Button primaryBtn={true} icon={<CgLogIn />} text={'Register'} />
+                    <Button primaryBtn={true} icon={<FaUserPlus />} text={'Register'} />
                 </div>
             </form>
         </div>
