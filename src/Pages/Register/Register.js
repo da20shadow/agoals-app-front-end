@@ -21,7 +21,7 @@ function Register() {
             password,
             re_password,
         }
-        const invalidFormDataMessage = useerService.verifyForm(username,email,password,re_password);
+        const invalidFormDataMessage = useerService.verifyRegForm(username,email,password,re_password);
 
         if (invalidFormDataMessage){
             setAlert(<Notification type={'Error'} text={invalidFormDataMessage} />)
