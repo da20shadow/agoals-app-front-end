@@ -26,10 +26,6 @@ function Login() {
                         token: res.token,
                         }
                     )
-                    setAlert(<Notification type={'Success'} text={'You Are Successfully Logged In!'}/>);
-                    setTimeout(()=>{
-                        redirect('/account');
-                    },1500);
                 })
                 .catch(err => {
                     setAlert(<Notification type={'Error'} text={err.response.data.message}/>);
@@ -46,7 +42,7 @@ function Login() {
             <div id="message" className="text-center absolute">{ alert }</div>
 
             <form method="post"
-                  className={'loginForm bg-main-bg w-4/5 md:w-96 bg-light-slate-bg drop-shadow-2xl'}
+                  className={'loginForm bg-main-bg w-4/5 md:w-96 drop-shadow-2xl rounded-lg'}
                   onSubmit={processLogin}>
 
                 <h1 className="text-center text-blue text-3xl mb-8">Login</h1>
