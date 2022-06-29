@@ -39,7 +39,7 @@ function Sidebar() {
                         </div>
                         <nav className={'mt-10'}>
 
-                            <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase">Goals</p>
+                            <p className="text-light-gray dark:text-light-gray m-3 mt-4 uppercase">Goals</p>
 
                             <NavLink to={'/create-goal'}
                                      className={({isActive}) => isActive ? activeLink : normalLink}
@@ -62,8 +62,15 @@ function Sidebar() {
                                 <span className={'capitalize'}>Financial goals</span>
                             </NavLink>
 
+                            <NavLink to={'/other-goals'}
+                                     className={({isActive}) => isActive ? activeLink : normalLink}
+                                     onClick={handleCloseSideBar} >
+                                <FaMoneyBillWave/>
+                                <span className={'capitalize'}>Other goals</span>
+                            </NavLink>
 
-                            <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase">Tasks</p>
+
+                            <p className="text-light-gray dark:text-light-gray">Tasks</p>
                             <NavLink to={'/tasks'}
                                      className={({isActive}) => isActive ? activeLink : normalLink}
                                      onClick={handleCloseSideBar} >
