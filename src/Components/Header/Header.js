@@ -30,8 +30,8 @@ function Header() {
         }
     }, [screenSize]);
 
-    const activeLink = 'items-center gap-3 pl-4 pr-4 pt-2 pb-2 rounded-lg  text-white bg-blue-bg text-md m-3';
-    const normalLink = 'items-center gap-3 pl-4 pr-4 pt-2 pb-2 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-3';
+    const activeLink = 'items-center gap-2 px-3 py-2 rounded-lg  text-white bg-blue-bg text-md m-3';
+    const normalLink = 'items-center gap-2 px-3 py-2 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-3';
 
     const processLogout = () => {
         setActiveMenu(false);
@@ -63,7 +63,7 @@ function Header() {
 
     return (
         <>
-            <nav className={'flex justify-between p-2 md:mx-6 relative mt-1'}>
+            <nav className={'flex justify-between items-center p-2 md:mx-6 relative mt-1'}>
 
                 {
                     isLogged
