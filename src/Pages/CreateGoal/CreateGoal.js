@@ -1,11 +1,13 @@
 import {Button, Notification} from "../../Components";
 import {GoPlus} from 'react-icons/go';
 import {useState} from "react";
-import * as authService from "../../Services/AuthService";
+import * as goalService from "../../Services/GoalService";
 import {useAuthContext} from "../../Contexts/AuthContext";
+import {useStateContext} from "../../Contexts/ContextProvider";
 
 function CreateGoal(){
     const {user} = useAuthContext();
+    const {updateAllGoals} = useStateContext();
     const [alert, setAlert] = useState(undefined);
 
     const createGoal = (e) => {
@@ -21,14 +23,12 @@ function CreateGoal(){
             due_date,
             user_id: user.user_id
         }
-
-        console.log(data)
-
         if (!alert) {
-            let response = authService.createGoal(data);
+            let response = goalService.createGoal(data);
             response
-                .then(data => {
-                    setAlert(<Notification type={'Success'} text={data.message} />);
+                .then(res => {
+                    setAlert(<Notification type={'Success'} text={res.message} />);
+                    updateAllGoals({user_id: user.user_id});
                 })
                 .catch(err => {
                     setAlert(<Notification type={'Error'} text={err.response.data.message}/>);
@@ -64,16 +64,14 @@ function CreateGoal(){
                               className={'p-3'}
                     />
 
-
-
                 </div>
                 <div className="grid gap-4 grid-cols-2 mt-10">
 
-                    <select name="goal_category"
+                    <select name="category"
                             className={'w-full px-3 py-2 border border-slate-400 rounded-lg'}>
-                        <option value="personal">Personal</option>
-                        <option value="financial">Financial</option>
-                        <option value="Other">Other</option>
+                        <option value="1">Personal</option>
+                        <option value="2">Financial</option>
+                        <option value="3">Other</option>
                     </select>
 
                     <input type="date"
