@@ -12,20 +12,17 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useLocalStorage('user', initialAuthState);
-    const [isLogged,setIsLogged] = useState(false);
 
     const login = (authData) => {
         setUser(authData);
-        setIsLogged(true);
     }
 
     const logout = () => {
         setUser(initialAuthState);
-        setIsLogged(false);
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, logout, isLogged }}>
+        <AuthContext.Provider value={{ user, login, logout, isLogged: !!user.email }}>
             {children}
         </AuthContext.Provider>
     );
