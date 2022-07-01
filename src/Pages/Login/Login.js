@@ -3,7 +3,7 @@ import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import * as authService from '../../Services/AuthService';
 import {CgLogIn} from 'react-icons/cg';
-import {Button, Notification} from "../../Components";
+import {Button,Input, Notification} from "../../Components";
 import {useAuthContext} from "../../Contexts/AuthContext";
 function Login() {
     const redirect = useNavigate();
@@ -49,17 +49,9 @@ function Login() {
 
                 <div className="grid gap-4 grid-cols-1">
 
-                    <input type="text"
-                           name={'username'}
-                           className="w-full px-3 py-2 border border-slate-400 rounded-lg"
-                           placeholder={'Username'}
-                           required/>
+                    <Input type={'text'} name={'username'} placeHolder={'Username'} />
 
-                    <input type="password"
-                           name={'password'}
-                           className="w-full px-3 py-2 border border-slate-400 rounded-lg"
-                           placeholder={'Password'}
-                           required/>
+                    <Input type={'password'} name={'password'} placeHolder={'Password'} />
 
                     <div className="my-5">
                         <Button primaryBtn={true} icon={<CgLogIn />} text={'Login'} />
