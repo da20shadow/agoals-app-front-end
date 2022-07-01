@@ -1,0 +1,44 @@
+.modal{
+  background-color: #d8d8d8;
+  margin: auto;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s;
+
+  form{
+
+  }
+}
+
+@-webkit-keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+@keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+.modal-header{
+  background-color: #074096;
+  color: #b7c6e5;
+}
+.modal-footer{
+
+}
+
+.close{
+  position: relative;
+  top: -7px;
+  right: 10px;
+  color:#b7c6e5;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  &:hover{
+    color: #01011c;
+    cursor: pointer;
+  }
+}
