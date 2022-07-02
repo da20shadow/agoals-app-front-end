@@ -1,8 +1,10 @@
 export {default as Header} from './Header';
 export {default as Footer} from './Footer';
 export {default as Sidebar} from './Sidebar';
-export {default as LeftNavbar} from './LeftNavbar';
 export {default as Button} from './Button';
+export {default as Input} from './Input';
+export {default as Select} from './Select';
+export {default as DropDownMenu} from './DropDownMenu';
 export {default as Notification} from './Notification';
 export {default as UserProfile} from './UserProfile';
 export {default as ChartHeader} from './Charts/ChartHeader';
