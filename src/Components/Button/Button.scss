@@ -1,0 +1,14 @@
+.btn{
+  display: flex;
+  align-items: center;
+  font-size: 21px;
+  font-weight: 700;
+  padding: 7px 45px;
+  border-radius: 5px;
+  span{
+    padding-left: 9px;
+  }
+  &:hover{
+
+  }
+}
