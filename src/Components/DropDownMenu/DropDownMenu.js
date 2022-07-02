@@ -1,7 +1,7 @@
 function DropDownMenu({showHide,activeMenu, menus}) {
 
     const dropDownStyle = {
-        left: '-37px',
+        left: '-25px',
     }
 
     return (
@@ -15,7 +15,7 @@ function DropDownMenu({showHide,activeMenu, menus}) {
                         return (
                             <div key={menu.menu}
                                  onClick={menu.onClickFun}
-                                 className={`text-sm cursor-pointer flex justify-start items-center py-2 px-3 hover:bg-green-bg 
+                                 className={`text-sm cursor-pointer flex justify-start items-center py-2 px-3 hover:bg-neutral-bg
                                             whitespace-nowrap flex-nowrap ${menu.textColor && `text-${menu.textColor}`}`}
                                  >
                                 {menu.icon && menu.icon}
