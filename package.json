@@ -3,23 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@syncfusion/ej2": "^19.4.48",
-    "@syncfusion/ej2-react-calendars": "^19.4.48",
-    "@syncfusion/ej2-react-charts": "^19.4.50",
-    "@syncfusion/ej2-react-dropdowns": "^19.4.52",
-    "@syncfusion/ej2-react-grids": "^19.4.50",
-    "@syncfusion/ej2-react-inputs": "^19.4.52",
-    "@syncfusion/ej2-react-kanban": "^19.4.48",
-    "@syncfusion/ej2-react-popups": "^19.4.52",
-    "@syncfusion/ej2-react-richtexteditor": "^19.4.50",
-    "@syncfusion/ej2-react-schedule": "^19.4.50",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "apexcharts": "^3.35.3",
     "autoprefixer": "^10.4.7",
     "axios": "^0.27.2",
-    "bootstrap-icons": "^1.8.3",
     "react": "^18.1.0",
+    "react-apexcharts": "^1.4.0",
     "react-dom": "^18.1.0",
     "react-icons": "^4.4.0",
     "react-router-dom": "^6.3.0",
@@ -52,6 +43,13 @@
     ]
   },
   "devDependencies": {
-    "tailwindcss": "^3.1.4"
+    "eslint": "*",
+    "eslint-config-airbnb": "*",
+    "eslint-plugin-import": "*",
+    "eslint-plugin-jsx-a11y": "*",
+    "eslint-plugin-react": "*",
+    "eslint-plugin-react-hooks": "*",
+    "postcss": "*",
+    "tailwindcss": "*"
   }
 }

@@ -1,7 +1,7 @@
 import './Assets/Scss/App.css';
 import {Routes, Route, Navigate } from 'react-router-dom';
 import {Header, Footer, Sidebar} from "./Components";
-import {Home, Login, Register, Account, Tasks, Goals, CreateGoal} from "./Pages";
+import {Home, Login, Register, Account, Tasks, Goals,SingleGoal, CreateGoal} from "./Pages";
 import {useStateContext} from "./Contexts/ContextProvider";
 import {useAuthContext} from "./Contexts/AuthContext";
 
@@ -13,7 +13,7 @@ function App() {
             <div className={'flex relative dark:bg-main-dark-bg'}>
 
                 {activeMenu ? (
-                    <div className="w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white">
+                    <div className="w-72 fixed sidebar dark:bg-secondary-dark-bg bg-main-bg">
                         <Sidebar/>
                     </div>
                 ) : (
@@ -38,6 +38,7 @@ function App() {
                         <Route path={'/create-goal'} element={isLogged ? <CreateGoal/> : <Navigate to={'/login'}/>}/>
                         <Route path={'/goals'} element={isLogged ? <Goals/> : <Navigate to={'/login'}/>}/>
                         <Route path={'/tasks'} element={isLogged ? <Tasks/> : <Navigate to={'/login'}/>}/>
+                        <Route path={'/goal/:goal_id'} element={isLogged ? <SingleGoal/> : <Navigate to={'/login'}/>}/>
                     </Routes>
                 </div>
 
