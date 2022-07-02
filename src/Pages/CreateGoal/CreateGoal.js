@@ -4,8 +4,12 @@ import {useState} from "react";
 import * as goalService from "../../Services/GoalService";
 import {useAuthContext} from "../../Contexts/AuthContext";
 import {useStateContext} from "../../Contexts/ContextProvider";
+import * as authService from "../../Services/AuthService";
+import {useNavigate} from "react-router-dom";
 
 function CreateGoal(){
+    const redirect = useNavigate();
+    const {logout} = useAuthContext();
     const {user} = useAuthContext();
     const {updateAllGoals} = useStateContext();
     const [alert, setAlert] = useState(undefined);
@@ -21,17 +25,26 @@ function CreateGoal(){
             description,
             category,
             due_date,
-            user_id: user.user_id
+            user_id: user.user_id,
+            token: user.token
         }
         if (!alert) {
             let response = goalService.createGoal(data);
             response
                 .then(res => {
                     setAlert(<Notification type={'Success'} text={res.message} />);
-                    updateAllGoals({user_id: user.user_id});
+                    updateAllGoals({user_id: user.user_id, token:user.token});
                 })
                 .catch(err => {
                     setAlert(<Notification type={'Error'} text={err.response.data.message}/>);
+                    console.log(err)
+                    console.log(err.response.data.message)
+                    if (err.response.data.message === 'Invalid Token!'){
+                        setTimeout(()=>{
+                            logout();
+                            redirect('/login');
+                        },2000)
+                    }
                 })
         }
         setTimeout(() => {
